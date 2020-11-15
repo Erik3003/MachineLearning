@@ -30,7 +30,7 @@ for i_episode in range(1000):
     state, reward = env.reset('fix')  # random or fix
     agent.reset()
 
-    for t in range(60):   #60):    # Achtung: sehr kritischer Parameter -> ca. 2 * laengster Weg
+    for t in range(60):   #60):    # Achtung: cleasehr kritischer Parameter -> ca. 2 * laengster Weg
         action = agent.step(state, reward)
         state, reward, done, info = env.step(action)
 
