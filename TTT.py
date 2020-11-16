@@ -45,7 +45,7 @@ class game:
         self.currentPlayer = -self.currentPlayer
         winner = self.hasWon()
         if winner != 0:
-            if winner == self.currentPlayer: return self.HAS_WON #Redundant, der der guckt ist immer Verlierer
+            if winner == self.currentPlayer: return self.HAS_WON
             else: return self.HAS_LOST
         openSpaces = self.getOpenSpaces()
         if openSpaces == []: return self.HAS_ENDED
