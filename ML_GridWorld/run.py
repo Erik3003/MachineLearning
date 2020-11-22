@@ -13,7 +13,7 @@ import environment11_17 as environment
 # import agent                                       # in work
 # import agent_first_visit_mc_estimating_v as agent  # in work
 # import agent_tabular_td0_estimating_v as agent     # in work
-import agent_q_learning as agent
+import agent_sarsa_learning as agent
 
 import evaluation
 import logging
@@ -26,7 +26,7 @@ agent = agent.Agent(env.get_action_space())
 evaluation = evaluation.Evaluation(agent, env)    # liest nur aus den Objekten
 
 count_episode_done = 0
-for i_episode in range(1000):
+for i_episode in range(5000):
     state, reward = env.reset('fix')  # random or fix
     agent.reset()
 
