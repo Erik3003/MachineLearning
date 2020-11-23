@@ -22,9 +22,9 @@ class Agent:
         # gamma: 0.99-0.7, alpha: 0.5, epsilon 0.2 sehr gut
         # 17_11 gridworld, start fix o. random: 3000 Episoden, laenge: 60
         # gamma: 0.99-0.7, alpha: 0.5, epsilon 0.2 sehr gut
-        self.discountrate = 0.999  # gamma
-        self.alpha = 0.5   #alpha
-        self.epsilon = 0.2   # fuer epsilon greedy policy (epsilon = Anteil random)
+        self.discountrate = 0.995  # 0 Shortterm vs 1 Longterm
+        self.alpha = 0.2   # Lernrate, wie start alte Informatinen überschrieben werden
+        self.epsilon = 0.0   # Anteil von zufälligen Schritten
         self.stateinfos = {}
         self.oldstate = -1
         self.oldaction = -1

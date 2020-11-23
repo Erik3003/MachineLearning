@@ -26,8 +26,8 @@ agent = agent.Agent(env.get_action_space())
 evaluation = evaluation.Evaluation(agent, env)    # liest nur aus den Objekten
 
 count_episode_done = 0
-for i_episode in range(5000):
-    state, reward = env.reset('fix')  # random or fix
+for i_episode in range(10000):
+    state, reward = env.reset('random')  # random or fix
     agent.reset()
 
     for t in range(60):   #60):    # Achtung: cleasehr kritischer Parameter -> ca. 2 * laengster Weg
@@ -41,7 +41,8 @@ for i_episode in range(5000):
             count_episode_done += 1
             print("----- Episode done", i_episode, "success count:", count_episode_done, "  finished after", t+1,  " timesteps")
             if i_episode % 500 == 0:
-                evaluation.render()
+                pass
+                # evaluation.render()
             break
 
     print("Episode", i_episode, "finished after", t+1,  " timesteps")
