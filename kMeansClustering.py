@@ -1,14 +1,15 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn import datasets
 
 
 class KMeansClustering:
 
     def __init__(self, k, data):
-        self.k = k
-        self.means = data[0:k]
-        self.array = data
-        self.groups = np.zeros(len(data))
+        self.k = k # Anzahl der Cluster/Mittelwertvektoren
+        self.means = data[0:k] # Mittelwertvektoren
+        self.array = data # Array mit Daten
+        self.groups = np.zeros(len(data)) # Clusterzugehörigkeit der Daten
 
     def step(self):
         # Hier bearbeiten
@@ -43,10 +44,16 @@ class KMeansClustering:
 
 
 if __name__ == '__main__':
-    data_array = [[23., 11.], [3., 12.], [12., 8.], [23., 9.], [12., 9.], [10., 10.], [7., 4.], [20., 1.], [7., 11.]]
+    iris = datasets.load_iris()
+    data_array = iris.data[:, :2]
     cluster = KMeansClustering(3, data_array)
 
     while not cluster.optimal():
         cluster.step()
+
+    if np.array_equal(cluster.groups, iris.target):
+        print("Aufgabe erfolgreich beendet!")
+    else:
+        print("Da muss noch was getan werden!")
 
     cluster.visualize()
