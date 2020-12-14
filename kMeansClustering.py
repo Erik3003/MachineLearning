@@ -11,12 +11,13 @@ class KMeansClustering:
         self.array = data # Array mit Daten
         self.groups = np.zeros(len(data)) # Clusterzugehörigkeit der Daten
 
-    def step(self):
+    def calculate_means(self):
         # Hier bearbeiten und neue Mittelwertvektoren ermitteln
         pass
 
-    def optimal(self):
+    def cluster_data(self):
         # Ordnet die Daten den Clustern zu
+        # Gibt True zurück, wenn die neu berechnete Ordnung der alten entspricht (Abbruchbedingung)
         new_groups = np.zeros(len(self.array))
         for i in range(len(self.array)):
             min_distance = -1
@@ -53,8 +54,8 @@ if __name__ == '__main__':
     cluster = KMeansClustering(3, data_array)
 
     # K-Means Clustering Algorithmus nach Lloyd
-    while not cluster.optimal():
-        cluster.step()
+    while not cluster.calculate_means():
+        cluster.cluster_data()
 
     if np.array_equal(cluster.groups, iris.target):
         print("Aufgabe erfolgreich beendet!")
