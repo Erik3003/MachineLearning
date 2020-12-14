@@ -25,7 +25,7 @@ class KMeansClustering:
 
     def cluster_data(self):
         # Ordnet die Daten den Clustern zu
-        # Gibt True zurück, wenn die neu berechnete Ordnung der alten entspricht (Abbruchbedingung)
+        # Gibt False zurück, wenn die neu berechnete Ordnung der alten entspricht (Abbruchbedingung)
         new_groups = np.zeros(len(self.array))
         for i in range(len(self.array)):
             min_distance = -1
@@ -36,9 +36,9 @@ class KMeansClustering:
                     min_distance = distance
                     new_groups[i] = m
         if np.array_equal(new_groups, self.groups):
-            return True
+            return False
         self.groups = new_groups
-        return False
+        return True
 
     def visualize(self):
         # Zeichnen der Plots
@@ -49,6 +49,15 @@ class KMeansClustering:
                 plt.plot(self.array[i][n], self.array[i][n+1], marker='o', color=self.get_color(category))
             for i in range(self.k):
                 plt.plot(self.means[i][n], self.means[i][n+1], marker='x', color=self.get_color(i))
+            if n == 0:
+                plt.title("Sepal size")
+                plt.ylabel("Sepal width (cm)")
+                plt.xlabel("Sepal length (cm)")
+            if n == 2:
+                plt.title("Petal size")
+                plt.ylabel("Petal width (cm)")
+                plt.xlabel("Petal length (cm)")
+
         plt.show()
 
     def get_color(self, n):
@@ -64,7 +73,7 @@ if __name__ == '__main__':
     cluster = KMeansClustering(3, data_array)
 
     # K-Means Clustering Algorithmus nach Lloyd
-    while not cluster.cluster_data():
+    while cluster.cluster_data():
         cluster.calculate_means()
 
     cluster.visualize()
