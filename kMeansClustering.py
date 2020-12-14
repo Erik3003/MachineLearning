@@ -15,6 +15,7 @@ class KMeansClustering:
         # Hier bearbeiten und neue Mittelwertvektoren ermitteln
         pass
 
+
     def cluster_data(self):
         # Ordnet die Daten den Clustern zu
         # Gibt True zurück, wenn die neu berechnete Ordnung der alten entspricht (Abbruchbedingung)
@@ -22,8 +23,8 @@ class KMeansClustering:
         for i in range(len(self.array)):
             min_distance = -1
             for m in range(self.k):
-                p_to_mean = [self.array[i][0] - self.means[m][0], self.array[i][1] - self.means[m][1]]
-                distance = p_to_mean[0] * p_to_mean[0] + p_to_mean[1] * p_to_mean[1]
+                p_to_mean = np.subtract(self.array[i], self.means[m])
+                distance = np.sum(np.multiply(p_to_mean, p_to_mean))
                 if distance < min_distance or min_distance == -1:
                     min_distance = distance
                     new_groups[i] = m
@@ -33,12 +34,14 @@ class KMeansClustering:
         return False
 
     def visualize(self):
-        # Zeichnen des Plots
-        for i in range(len(self.array)):
-            category = self.groups[i]
-            plt.plot(self.array[i][0], self.array[i][1], marker='o', color=self.get_color(category))
-        for i in range(self.k):
-            plt.plot(self.means[i][0], self.means[i][1], marker='x', color=self.get_color(i))
+        # Zeichnen der Plots
+        for n in np.multiply(range(int(len(self.array[0])/2)), 2):
+            plt.figure(n)
+            for i in range(len(self.array)):
+                category = self.groups[i]
+                plt.plot(self.array[i][n], self.array[i][n+1], marker='o', color=self.get_color(category))
+            for i in range(self.k):
+                plt.plot(self.means[i][n], self.means[i][n+1], marker='x', color=self.get_color(i))
         plt.show()
 
     def get_color(self, n):
@@ -49,13 +52,13 @@ class KMeansClustering:
 if __name__ == '__main__':
     # Läd Iris-Datensatz
     iris = datasets.load_iris()
-    data_array = iris.data[:, :2]
+    data_array = iris.data[:, :]
     # Erstellt eine KMeansClustering-Objekt mit k=3
     cluster = KMeansClustering(3, data_array)
 
     # K-Means Clustering Algorithmus nach Lloyd
-    while not cluster.calculate_means():
-        cluster.cluster_data()
+    while not cluster.cluster_data():
+        cluster.calculate_means()
 
     if np.array_equal(cluster.groups, iris.target):
         print("Aufgabe erfolgreich beendet!")
