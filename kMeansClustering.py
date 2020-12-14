@@ -12,10 +12,11 @@ class KMeansClustering:
         self.groups = np.zeros(len(data)) # Clusterzugehörigkeit der Daten
 
     def step(self):
-        # Hier bearbeiten
+        # Hier bearbeiten und neue Mittelwertvektoren ermitteln
         pass
 
     def optimal(self):
+        # Ordnet die Daten den Clustern zu
         new_groups = np.zeros(len(self.array))
         for i in range(len(self.array)):
             min_distance = -1
@@ -31,6 +32,7 @@ class KMeansClustering:
         return False
 
     def visualize(self):
+        # Zeichnen des Plots
         for i in range(len(self.array)):
             category = self.groups[i]
             plt.plot(self.array[i][0], self.array[i][1], marker='o', color=self.get_color(category))
@@ -44,10 +46,13 @@ class KMeansClustering:
 
 
 if __name__ == '__main__':
+    # Läd Iris-Datensatz
     iris = datasets.load_iris()
     data_array = iris.data[:, :2]
+    # Erstellt eine KMeansClustering-Objekt mit k=3
     cluster = KMeansClustering(3, data_array)
 
+    # K-Means Clustering Algorithmus nach Lloyd
     while not cluster.optimal():
         cluster.step()
 
