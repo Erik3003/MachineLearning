@@ -7,14 +7,21 @@ class KMeansClustering:
 
     def __init__(self, k, data):
         self.k = k # Anzahl der Cluster/Mittelwertvektoren
-        self.means = data[0:k] # Mittelwertvektoren
+        self.means = data[:k] # Mittelwertvektoren
         self.array = data # Array mit Daten
         self.groups = np.zeros(len(data)) # Clusterzugehörigkeit der Daten
 
     def calculate_means(self):
         # Hier bearbeiten und neue Mittelwertvektoren ermitteln
-        pass
+        self.means = [[0.] * len(self.array[0])] * self.k
+        divider = [0] * self.k
+        for i in range(len(self.array)):
+            group = int(self.groups[i])
+            divider[group] = divider[group] + 1
+            self.means[group] = np.add(self.means[group], self.array[i]).tolist()
 
+        for i in range(self.k):
+            self.means[i] = np.divide(self.means[i], divider[i]).tolist()
 
     def cluster_data(self):
         # Ordnet die Daten den Clustern zu
@@ -59,10 +66,5 @@ if __name__ == '__main__':
     # K-Means Clustering Algorithmus nach Lloyd
     while not cluster.cluster_data():
         cluster.calculate_means()
-
-    if np.array_equal(cluster.groups, iris.target):
-        print("Aufgabe erfolgreich beendet!")
-    else:
-        print("Da muss noch was getan werden!")
 
     cluster.visualize()
