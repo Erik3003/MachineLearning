@@ -54,8 +54,8 @@ if __name__ == '__main__':
     cluster = KMeansClustering(3, data_array)
 
     # K-Means Clustering Algorithmus nach Lloyd
-    while not cluster.calculate_means():
-        cluster.cluster_data()
+    while not cluster.cluster_data():
+        cluster.calculate_means()
 
     if np.array_equal(cluster.groups, iris.target):
         print("Aufgabe erfolgreich beendet!")
